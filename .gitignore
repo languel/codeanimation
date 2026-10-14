@@ -1,0 +1,19 @@
+# Node dependencies
+node_modules/
+package-lock.json
+
+# Build and render outputs
+out/
+shots/
+*.mp4
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
