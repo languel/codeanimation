@@ -33,6 +33,10 @@ The aesthetic is physical and organic: boiling ink linework, watercolor washes t
 
 ---
 
+## Inspiration and credit
+
+This skill was inspired by [JohnHeibel/ClaudeAnimationBase](https://github.com/JohnHeibel/ClaudeAnimationBase), John Heibel’s starter kit for hand-painted animation with p5.js and p5.brush. Thank you to John for sharing the original kit and animation guidance. This repository adapts that inspiration into an experimental skill for students using different coding-agent harnesses.
+
 ## Installation
 
 This repository contains **one skill**, `codeanimation`. It follows the [Agent Skills standard](https://agentskills.io): a folder with `SKILL.md` and supporting resources. Claude Code supports this standard too; the discovery folder differs. `AGENTS.md` project instructions and subagent definitions are separate concepts.
