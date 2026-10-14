@@ -1,11 +1,12 @@
 ---
 name: codeanimation
-description: Create hand-painted, code-driven animated videos and motion graphics using p5.js and p5.brush. Generates organic boiling ink linework, watercolor washes, and paper grain with deterministic time-based rendering. Supports any source material (custom characters, technical explainers, narrative cartoons, motion graphics), any source audio or music (BPM synchronization, beat-locked motion, audio muxing via FFmpeg), and any format (16:9 widescreen, 9:16 vertical shorts/reels, 1:1 square). Storyboards first, builds shot by shot, checks frames with contact sheets, and renders to MP4.
+description: Create hand-painted 2D animated videos and motion graphics with p5.js and p5.brush. Use for character animation, visual explainers, or music-synchronized clips with storyboards, frame review, and MP4 export.
 license: MIT
-compatibility: Platform-agnostic. Runs in any coding environment or terminal with Node.js 20+, Google Chrome (or Chromium), and ffmpeg.
 metadata:
   opencode/slash: "true"
 ---
+
+Runtime requirements: Platform-agnostic. Runs in any coding environment or terminal with Node.js 20+, Google Chrome (or Chromium), and ffmpeg.
 
 # Code Animation
 
@@ -25,7 +26,9 @@ The aesthetic is physical and organic: boiling ink outlines, soft watercolor was
 
 ## Invocation & Subcommands
 
-When invoked via **`/codeanimation [command]`**, the assistant routes directly to the requested mode:
+Use the harness’s skill invocation syntax (for example `$codeanimation` in Codex or `/codeanimation` in Claude Code), or ask to use codeanimation in plain language. Resolve `<skill_dir>` to the directory containing this file. The slash commands below describe agent intents, not standalone shell commands.
+
+When invoked with a command, the assistant routes directly to the requested mode:
 
 ### 1. Scaffolding a New Project
 ```text
@@ -98,10 +101,7 @@ Run the scaffolding script in your target workspace directory:
 ```bash
 node /path/to/skill/kit/scaffold.mjs [target_dir] --aspect=16:9 --bpm=120 --duration=12
 ```
-Or work directly with the starter kit in the repository:
-```bash
-npm install
-```
+Run rendering commands from the generated project directory, after `npm install`. The bundled `kit/` is a template, not a complete runnable project.
 
 ### 4. Rig the Subject
 - **Characters:** Use `src/characters/actor.js` as a reference or create a custom rig using `src/characters/template.js` (see [characters.md](references/characters.md)). Define silhouette, drawn key views (`front`, `3/4`, `side`, `back`), facial states, and prop attachment hooks (`armL`, `armR`, `draw`).

@@ -1,5 +1,8 @@
 # Code Animation (`/codeanimation`)
 
+
+> Experimental and unpolished. These are classroom experiments, not a supported production toolkit. Expect rough edges, changing dependencies, and different results across models and harnesses.
+
 A framework and agent skill for creating **hand-painted, code-driven 2D animated videos and motion graphics** using [p5.js](https://p5js.org) and [p5.brush](https://github.com/acamposuribe/p5.brush).
 
 The aesthetic is physical and organic: boiling ink linework, watercolor washes that bleed into the paper grain, additive glows, and calm eased motion. Every frame is a deterministic pure function of time `t`, allowing instant seeking in an interactive browser studio and fast parallel rendering to MP4 via headless Chrome and FFmpeg.
@@ -30,19 +33,74 @@ The aesthetic is physical and organic: boiling ink linework, watercolor washes t
 
 ---
 
-## Installing as an Agent Skill
+## Installation
+
+This repository contains **one skill**, `codeanimation`. It follows the [Agent Skills standard](https://agentskills.io): a folder with `SKILL.md` and supporting resources. Claude Code supports this standard too; the discovery folder differs. `AGENTS.md` project instructions and subagent definitions are separate concepts.
+
+Install the whole folder, not just `SKILL.md`. Installing a skill makes its instructions available; it does not install Node.js, Chrome, FFmpeg, or the generated project's npm dependencies.
+
+### Clone once
+
+The commands below use macOS/Linux shell syntax. On Windows, copy the complete folder into the corresponding skills directory, or use WSL.
+
+```bash
+mkdir -p ~/dev/skills
+git clone https://github.com/languel/codeanimation.git ~/dev/skills/codeanimation
+```
+
+If already cloned, keep that checkout and substitute its absolute path below.
+
+### Harnesses with shared `.agents` paths
+
+[Codex](https://developers.openai.com/codex/skills/), [OpenCode](https://opencode.ai/docs/skills/), [Gemini CLI](https://geminicli.com/docs/cli/skills/), and [Cursor](https://cursor.com/docs/skills) support `.agents/skills` in projects and `~/.agents/skills` for personal installs.
+
+```bash
+mkdir -p ~/.agents/skills
+ln -s ~/dev/skills/codeanimation ~/.agents/skills/codeanimation
+```
+
+### Claude Code
+
+[Claude Code](https://code.claude.com/docs/en/skills) supports standard Agent Skills and documents `.claude/skills` for discovery. Use its documented path rather than assuming `.agents` discovery:
+
+```bash
+mkdir -p ~/.claude/skills
+ln -s ~/dev/skills/codeanimation ~/.claude/skills/codeanimation
+```
+
+OpenCode and Cursor also recognize Claude-compatible paths. If you use both groups, the links can point to the same checkout; avoid duplicate installs in a harness if it reports name conflicts.
 
 ### Antigravity
-Symlink into Antigravity's global skills directory:
+
+[Antigravity](https://antigravity.google/docs/skills) uses `.agents/skills` for project installs (legacy `.agent/skills` is also supported). Its app and IDE use this global path:
+
 ```bash
+mkdir -p ~/.gemini/config/skills
 ln -s ~/dev/skills/codeanimation ~/.gemini/config/skills/codeanimation
 ```
 
-### Claude Code / OpenCode / General Agent Rigs
-Symlink into your user agents skills directory:
+For Antigravity CLI, use `~/.gemini/antigravity-cli/skills` instead.
+
+### Install just this skill in a project
+
+From your project's root, copy the complete skill folder:
+
 ```bash
-ln -s ~/dev/skills/codeanimation ~/.agents/skills/codeanimation
+mkdir -p .agents/skills
+cp -R ~/dev/skills/codeanimation .agents/skills/codeanimation
 ```
+
+For Claude Code, substitute `.claude/skills` for `.agents/skills`. Copy into a new destination to avoid merging an old install. A copy is portable when sharing the project; an absolute symlink depends on your machine. You may omit the copied `.git` directory: it is repository metadata, not part of the skill.
+
+This is an individual-skill install: no other skills are bundled or required. For other harnesses that implement Agent Skills, copy this folder into their documented discovery location. A tool that only reads `AGENTS.md` does not automatically support skill discovery; explicitly ask it to read `SKILL.md` and follow the linked resources.
+
+### Use, update, and uninstall
+
+Start a new session or reload skills after installation. In Codex, use `$codeanimation`; in Claude Code, use `/codeanimation`. Other harnesses may offer slash commands, a skill picker, or automatic selection. A portable request is: "Use the codeanimation skill to make a short animation about …".
+
+Update the source checkout with `git -C ~/dev/skills/codeanimation pull --ff-only`. Symlink installs follow that checkout; copied installs need to be refreshed. To uninstall a symlink, remove only the link (for example `unlink ~/.agents/skills/codeanimation`).
+
+Discovery paths were checked against the linked official documentation on October 14, 2026. This does not mean the rendering pipeline has been tested in every harness.
 
 Once installed, you can invoke the skill directly in chat:
 - **Scaffold a new project:** `/codeanimation scaffold ./my-video --aspect=9:16 --duration=15`
@@ -54,15 +112,13 @@ Once installed, you can invoke the skill directly in chat:
 
 ## Quick Start (Standalone / CLI)
 
-### 1. Install Dependencies
+### 1. Clone the skills monorepo
 ```bash
-git clone https://github.com/your-username/codeanimation.git
+git clone https://github.com/languel/codeanimation.git
 cd codeanimation
-npm install
 ```
 
-### 2. Scaffold a New Animation Project
-Create a self-contained project anywhere on your system:
+### 2. Scaffold and Install a New Animation Project
 ```bash
 node kit/scaffold.mjs ./my-first-video --aspect=16:9 --bpm=120 --duration=10
 cd my-first-video

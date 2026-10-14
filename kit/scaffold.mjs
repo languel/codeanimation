@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdirSync, writeFileSync, copyFileSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -25,8 +25,22 @@ const args = Object.fromEntries(
   })
 );
 
+if (args.help) { usage(); process.exit(0); }
+if (!['16:9', '9:16', '1:1'].includes(args.aspect || '16:9')) {
+  console.error('Unsupported aspect ratio'); process.exit(1);
+}
+for (const key of ['bpm', 'duration']) {
+  if (args[key] !== undefined && (!Number.isFinite(Number(args[key])) || Number(args[key]) <= 0)) {
+    console.error(`${key} must be a positive number`); process.exit(1);
+  }
+}
+
 const targetPos = process.argv.slice(2).find(a => !a.startsWith('--'));
 const targetDir = resolve(targetPos || '.');
+
+if (existsSync(targetDir) && readdirSync(targetDir).length) {
+  console.error('Choose a new or empty project directory to avoid overwriting existing work'); process.exit(1);
+}
 
 const aspect = args.aspect || '16:9';
 let width = 1920, height = 1080;
@@ -72,7 +86,7 @@ const PROJECT = {
   offset: 0,
   width: ${width},
   height: ${height},
-  audio: ${audio ? `'${audio}'` : 'null'}
+  audio: ${JSON.stringify(audio)}
 };
 `);
 
