@@ -23,6 +23,40 @@ The aesthetic is physical and organic: boiling ink outlines, soft watercolor was
 
 ---
 
+## Invocation & Subcommands
+
+When invoked via **`/codeanimation [command]`**, the assistant routes directly to the requested mode:
+
+### 1. Scaffolding a New Project
+```text
+/codeanimation scaffold <path> [--aspect=16:9|9:16|1:1] [--duration=10] [--bpm=120] [--audio=path]
+```
+- **Behavior:** The agent immediately runs the scaffolding script, creates directory structure, sets up `package.json`, `studio.html`, `src/config.js`, `src/scenes/main.js`, runs `npm install`, and verifies the setup:
+  ```bash
+  node <skill_dir>/kit/scaffold.mjs <path> [options]
+  cd <path> && npm install
+  ```
+
+### 2. Visual Review & Checking
+```text
+/codeanimation review [sheet|strip|crop] [times...]
+```
+- **Behavior:** Runs headless checks (`render.mjs --sheet=...` or `--strip=...`) and inspects the resulting image files to audit poses, contacts, and transitions.
+
+### 3. Rendering Final Video
+```text
+/codeanimation render [--out=path.mp4] [--workers=4]
+```
+- **Behavior:** Renders the active project to MP4 with FFmpeg audio muxing.
+
+### 4. End-to-End Creative Direction
+```text
+/codeanimation [concept, character description, or song brief]
+```
+- **Behavior:** Begins the full creative pipeline: storyboards in `STORYBOARD.md`, designs character/visual rigs, codes scenes shot by shot, checks frames with contact sheets, and renders to MP4.
+
+---
+
 ## Workflow
 
 ### 1. Ingest & Define the Vision

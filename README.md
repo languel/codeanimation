@@ -44,7 +44,11 @@ Symlink into your user agents skills directory:
 ln -s ~/dev/skills/codeanimation ~/.agents/skills/codeanimation
 ```
 
-Once installed, invoke the skill in chat with **`/codeanimation`** or by asking the agent to create an animated video.
+Once installed, you can invoke the skill directly in chat:
+- **Scaffold a new project:** `/codeanimation scaffold ./my-video --aspect=9:16 --duration=15`
+- **Storyboard & animate:** `/codeanimation A curious robot discovering a glowing mushroom in the forest`
+- **Review frames:** `/codeanimation review sheet 0.5,1.5,2.5,3.5`
+- **Render to MP4:** `/codeanimation render`
 
 ---
 
